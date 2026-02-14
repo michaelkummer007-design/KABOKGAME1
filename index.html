@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Live App</title>
+<meta name="viewport" content="width=1200">
+<style>
+*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{
+  margin:0;
+  background:url("https://images.unsplash.com/photo-1520975916090-3105956dac38") center/cover no-repeat;
+  height:100vh;
+  overflow:hidden;
+}
+.blur{
+  backdrop-filter:blur(15px);
+  background:rgba(0,0,0,0.6);
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.login-box{
+  width:360px;
+  background:#111;
+  padding:25px;
+  border-radius:14px;
+}
+.login-box h2{
+  color:#fff;
+  text-align:center;
+  margin-bottom:20px;
+}
+input{
+  width:100%;
+  padding:12px;
+  margin-bottom:12px;
+  border-radius:8px;
+  border:none;
+  outline:none;
+}
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#6dff6d;
+  color:#000;
+  font-weight:bold;
+  cursor:pointer;
+}
+.error{
+  color:#ff5a5a;
+  font-size:13px;
+  margin-bottom:10px;
+  display:none;
+}
+
+/* APP */
+#app{
+  display:none;
+  background:#000;
+  color:#fff;
+  height:100vh;
+}
+.content{
+  height:calc(100vh - 60px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+}
+.nav{
+  height:60px;
+  background:#111;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+.nav div{
+  text-align:center;
+  font-size:13px;
+  color:#ccc;
+  cursor:pointer;
+}
+.nav div.active{color:#fff}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="blur" id="login">
+  <div class="login-box">
+    <h2>Sign In</h2>
+
+    <div class="error" id="error"></div>
+
+    <input id="email" placeholder="Email (gmail only)">
+    <input id="username" placeholder="username">
+    <input id="password" type="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="content" id="page">
+    🎥 For You
+  </div>
+
+  <div class="nav">
+    <div class="active">🎥<br>For Live</div>
+    <div>🗯️<br>Messages</div>
+    <div>🔎<br>Search</div>
+    <div>👨‍🦱<br>Profile</div>
+    <div>⚙️<br>Settings</div>
+  </div>
+</div>
+
+<script>
+function login(){
+  const email = document.getElementById("email").value;
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
+  const error = document.getElementById("error");
+
+  error.style.display="none";
+
+  if(!email.endsWith("@gmail.com")){
+    return show("Email must be @gmail.com");
+  }
+  if(!/^[a-z]+$/.test(user)){
+    return show("Username: lowercase letters only");
+  }
+  if(!/[A-Z]/.test(pass) || !/[0-9]{3,}/.test(pass)){
+    return show("Password: 1 capital letter + 3 numbers");
+  }
+
+  document.getElementById("login").style.display="none";
+  document.getElementById("app").style.display="block";
+}
+
+function show(msg){
+  const error=document.getElementById("error");
+  error.innerText=msg;
+  error.style.display="block";
+}
+</script>
+
+</body>
+</html>
